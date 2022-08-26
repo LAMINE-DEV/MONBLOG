@@ -1,0 +1,10 @@
+asgiref==3.5.2
+crispy-bootstrap5==0.6
+Django==4.0
+django-bootstrap-pagination==1.7.1
+django-crispy-forms==1.14.0
+django-pagination==1.0.7
+django-quill-editor==0.1.40
+Pillow==9.2.0
+sqlparse==0.4.2
+tzdata==2022.2

@@ -1,0 +1,169 @@
+
+
+{% extends './base.html'%}
+{% load crispy_forms_tags%}
+{%load static%}
+
+{%block content%}
+
+
+    <div class="row">
+
+    <div class="col-md-8">
+
+
+        <!-- Main Content-->
+        <main class="mb-4">
+            <div class="container px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-md-10 col-lg-8 col-xl-7">
+                        <p class="btn btn-warning"> Envoyer moi un message je vous repondrais avec un mail merci</p>
+                        <div class="my-5">
+                            <!-- * * * * * * * * * * * * * * *-->
+                            <!-- * * SB Forms Contact Form * *-->
+                            <!-- * * * * * * * * * * * * * * *-->
+                            <!-- This form is pre-integrated with SB Forms.-->
+                            <!-- To make this form functional, sign up at-->
+                            <!-- https://startbootstrap.com/solution/contact-forms-->
+                            <!-- to get an API token!-->
+                            <form id="contactForm" data-sb-form-api-token="API_TOKEN" method="post" action="" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                {{form.media}}
+                               
+                                {{form|crispy}}
+
+                                 <button type="submit" class="btn btn-primary" id="send" >Send Message</button>
+                               
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        
+
+    </div>
+    <div class="col-md-4">
+
+                     <!--- boite de navigation-->
+  <div class="list-group">
+  <button type="button" class="list-group-item list-group-item-action active" aria-current="true">
+    Tableau Bord
+  </button>
+    <ol class="list-group list-group-numbered">
+      <li class="list-group-item d-flex justify-content-between align-items-start">
+        <div class="ms-2 me-auto">
+          <div class="fw-bold"><a href="{%url 'category' 'python' %}" >Programmation en PYTHON 3</a></div>
+          version 3
+        </div>
+        <span class="badge bg-primary rounded-pill">{{categorie1|length}}</span>
+      </li>
+      <li class="list-group-item d-flex justify-content-between align-items-start">
+        <div class="ms-2 me-auto">
+          <div class="fw-bold"><a href="{%url 'category' 'java' %}">Programmation en JAVA</a></div>
+          tous les versions
+        </div>
+        <span class="badge bg-primary rounded-pill">{{categorie2|length}}</span>
+      </li>
+      <li class="list-group-item d-flex justify-content-between align-items-start">
+        <div class="ms-2 me-auto">
+          <div class="fw-bold"><a href="{%url 'category' 'django' %}">Programmation en DJANGO</a></div>
+          version 3 , 4.0 et 4.1
+        </div>
+        <span class="badge bg-primary rounded-pill">{{categorie3|length}}</span>
+
+      </li>
+        <li class="list-group-item d-flex justify-content-between align-items-start">
+        <div class="ms-2 me-auto">
+          <div class="fw-bold"><a href="{%url 'category' 'javascript' %}">Programmation en JAVASCRIP ET JQUERY</a></div>
+          tous les versions
+        </div>
+        <span class="badge bg-primary rounded-pill">{{categorie4|length}}</span>
+      </li>
+
+      <li class="list-group-item d-flex justify-content-between align-items-start">
+        <div class="ms-2 me-auto">
+          <div class="fw-bold"><a href="{%url 'category' 'css3' %}">Programmation en CSS3 ET BOOTSTRAP</a></div>
+          tous les versions
+        </div>
+        <span class="badge bg-primary rounded-pill">{{categorie5|length}}</span>
+      </li>
+
+      <li class="list-group-item d-flex justify-content-between align-items-start">
+        <div class="ms-2 me-auto">
+          <div class="fw-bold"><a href="{%url 'category' 'c' %}">Programmation en C </a></div>
+          tous les versions
+        </div>
+        <span class="badge bg-primary rounded-pill">{{categorie6|length}}</span>
+      </li>
+
+      <li class="list-group-item d-flex justify-content-between align-items-start">
+        <div class="ms-2 me-auto">
+          <div class="fw-bold"><a href="{%url 'category' 'html' %}">Programmation en HTML5</a> </div>
+          version 5
+        </div>
+        <span class="badge bg-primary rounded-pill">{{categorie7|length}}</span>
+      </li>
+
+      <li class="list-group-item d-flex justify-content-between align-items-start">
+        <div class="ms-2 me-auto">
+          <div class="fw-bold"><a href="{%url 'category' 'annonces' %}">Annonces</a> </div>
+          
+        </div>
+        <span class="badge bg-primary rounded-pill">{{categorie8|length}}</span>
+      </li>
+         
+          <li class="list-group-item d-flex justify-content-between align-items-start">
+        <div class="ms-2 me-auto">
+          <div class="fw-bold"><a href="{%url 'category' 'autres' %}">Autres</a> </div>
+        
+        </div>
+        <span class="badge bg-primary rounded-pill">{{categorie9|length}}</span>
+      </li>
+
+
+
+    </ol>
+  </div></br></br>
+        
+
+       {%include './calendar.html'%}
+
+
+
+
+    </div>
+</div>
+
+
+
+
+
+
+
+       
+        <script>
+
+            $(document).ready(function () {
+                swal("Message Du Serveur","Bienvenue Dans SENEGAL-CODE 2022!!!  L'administrateur Repond En Moins De 24 Heurs !!!");
+               $("#send").click(function(){
+
+                           var $email=$("input[name='email']").val()
+                           var $subject=$("input[name='subject']").val()
+                           var  $message=$("input[name='message']").val()
+                         
+                           if ($email.length===0 || $subject.length===0 || $message.length===0) {
+
+                             swal("Message Du Serveur!!!", " Message : Tous Les Champs Sont Aubligatoires !!!");
+                           }
+
+
+
+                            
+               });
+});
+
+        </script>
+
+{%endblock content%}

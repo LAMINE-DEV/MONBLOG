@@ -1,0 +1,38 @@
+
+
+{% extends 'appblog/base.html'%}
+{% load crispy_forms_tags%}
+
+{% load static %}
+{%block content%}
+
+<style type="text/css">
+    #hint_id_password2,#hint_id_password1{
+        display: none;
+    }
+     
+     .container-sm{
+        font-family: serif;
+
+     }
+
+</style>
+<div class="container-sm">
+    <h3 class="bg-success" style="font-family:monospace;">SignUp To SENEGALE-CODE 2022</h3>
+<form method="post" action="" enctype="multipart/form-data">
+
+
+            {%csrf_token%}
+            {{formsignup|crispy}}
+            {{fornProfile|crispy}}
+        <input type="submit" value="Signup" class="btn btn-warning">
+
+
+</form>
+</br>
+</div>
+
+
+
+{%endblock%}
+

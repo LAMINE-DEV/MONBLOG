@@ -1,0 +1,200 @@
+{% extends './base.html'%}
+
+{% load static %}
+{%block content%}
+
+
+        <!-- Main Content-->
+{%if messages%}
+{%for message in messages%}
+
+  <div class="alert alert-primary alert-dismissible fade show" role="alert">
+  <strong>Alert du Serveur!!!!</strong> {{message}}
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+
+
+{%endfor%}
+{%endif%}
+
+
+        <div class="row">
+                  <div class="col-md-7">
+                      {%if page_obj%}
+                         {%for post in page_obj%}
+                        
+          
+                        <div class="card mb-3">
+                           {% if post.document_video%}
+                               <video width="450" height="340" controls style="max-width:450px;max-height: 350px;">
+                                        <source src="{{post.document_video.url}}" type="video/mp4"> 
+                                             Votre navigateur ne permet pas de lire les vidéos HTML5.
+                                    </video>
+
+                               
+                                {%elif post.image%}
+
+                                   
+                                     <img src="{{post.image.url}}" style="width: min-content/3; height: min-content/3; border:10px;border-radius: 10px;" class="card-img-top" alt="Wild Landscape"/>
+
+                                    {%else%}
+                                    <img src="https://th.bing.com/th/id/R.cf84f1f47eeb04fe45aeb7315fd38384?rik=qRDORBi214I0qw&riu=http%3a%2f%2fcopylegal.ru%2fwp-content%2fuploads%2f2017%2f12%2fProgram-Supercomputer.jpg&ehk=Q9JOBctLrZ6e7P7P3t0hw380cw675QskgEyzq8QdtDU%3d&risl=&pid=ImgRaw&r=0" style="width: max-content/3; height: 300px; border:10px;border-radius: 10px;" class="card-img-top" alt="Wild Landscape"/ >
+                            
+                            {%endif%}
+                               
+
+                                      <div class="card-body">
+                                        <h5 class="card-title"><img src="https://media.istockphoto.com/vectors/caucasian-bridegroom-wearing-a-black-suit-in-cartoon-style-vector-vector-id1141905006?k=6&m=1141905006&s=170667a&w=0&h=MeiLI744Ge128M1YFJpq3zBxb4WycxbQ-SSFSx6STP4=" width=30px height=30px/> Categorie : {{post.categorie}}</h5>
+                                        <p class="card-text">
+                                          <p  class="font-monospace">{{post.body.html|safe|truncatechars:280}}</p>
+                                         <img src="https://th.bing.com/th/id/OIP.aJl09Fxf0o4Vw-YQKAaHLAHaHF?pid=ImgDet&w=926&h=886&rs=1" width=25px height=25px/> <h6><a href="{%url 'detail-view' post.pk%}"  class="btn btn-primary" >voir plus</a></h6>
+                                        </p>
+                                        <p class="card-text">
+                                          <strong>publier le</strong>{{post.datetime}}
+                                        </p>
+                                      </div>
+                                    </div>          
+                             {%endfor%}
+                             {%endif%}
+                    
+                    </div>
+
+            <div class="col-md-4">
+                <!--- boite de navigation-->
+  <div class="list-group">
+  <button type="button" class="list-group-item list-group-item-action active" aria-current="true">
+    Tableau Bord
+  </button>
+    <ol class="list-group list-group-numbered">
+      <li class="list-group-item d-flex justify-content-between align-items-start">
+        <div class="ms-2 me-auto">
+          <div class="fw-bold"><a href="{%url 'category' 'python' %}" >Programmation en PYTHON 3</a></div>
+          version 3
+        </div>
+        <span class="badge bg-primary rounded-pill">{{categorie1|length}}</span>
+      </li>
+      <li class="list-group-item d-flex justify-content-between align-items-start">
+        <div class="ms-2 me-auto">
+          <div class="fw-bold"><a href="{%url 'category' 'java' %}">Programmation en JAVA</a></div>
+          tous les versions
+        </div>
+        <span class="badge bg-primary rounded-pill">{{categorie2|length}}</span>
+      </li>
+      <li class="list-group-item d-flex justify-content-between align-items-start">
+        <div class="ms-2 me-auto">
+          <div class="fw-bold"><a href="{%url 'category' 'django' %}">Programmation en DJANGO</a></div>
+          version 3 , 4.0 et 4.1
+        </div>
+        <span class="badge bg-primary rounded-pill">{{categorie3|length}}</span>
+
+      </li>
+        <li class="list-group-item d-flex justify-content-between align-items-start">
+        <div class="ms-2 me-auto">
+          <div class="fw-bold"><a href="{%url 'category' 'javascript' %}">Programmation en JAVASCRIP ET JQUERY</a></div>
+          tous les versions
+        </div>
+        <span class="badge bg-primary rounded-pill">{{categorie4|length}}</span>
+      </li>
+
+      <li class="list-group-item d-flex justify-content-between align-items-start">
+        <div class="ms-2 me-auto">
+          <div class="fw-bold"><a href="{%url 'category' 'css3' %}">Programmation en CSS3 ET BOOTSTRAP</a></div>
+          tous les versions
+        </div>
+        <span class="badge bg-primary rounded-pill">{{categorie5|length}}</span>
+      </li>
+
+      <li class="list-group-item d-flex justify-content-between align-items-start">
+        <div class="ms-2 me-auto">
+          <div class="fw-bold"><a href="{%url 'category' 'c' %}">Programmation en C </a></div>
+          tous les versions
+        </div>
+        <span class="badge bg-primary rounded-pill">{{categorie6|length}}</span>
+      </li>
+
+      <li class="list-group-item d-flex justify-content-between align-items-start">
+        <div class="ms-2 me-auto">
+          <div class="fw-bold"><a href="{%url 'category' 'html' %}">Programmation en HTML5</a> </div>
+          version 5
+        </div>
+        <span class="badge bg-primary rounded-pill">{{categorie7|length}}</span>
+      </li>
+
+      <li class="list-group-item d-flex justify-content-between align-items-start">
+        <div class="ms-2 me-auto">
+          <div class="fw-bold"><a href="{%url 'category' 'annonces' %}">Annonces</a> </div>
+          
+        </div>
+        <span class="badge bg-primary rounded-pill">{{categorie8|length}}</span>
+      </li>
+         
+          <li class="list-group-item d-flex justify-content-between align-items-start">
+        <div class="ms-2 me-auto">
+          <div class="fw-bold"><a href="{%url 'category' 'autres' %}">Autres</a> </div>
+        
+        </div>
+        <span class="badge bg-primary rounded-pill">{{categorie9|length}}</span>
+      </li>
+
+
+
+    </ol>
+  </div></br>
+
+
+        <div class="card text-white bg-primary mb-6" style="max-width: 35rem;">
+        <div class="card-header">Total De Publication</div>
+        <div class="card-body">
+          <h5 class="card-title"></h5>
+          <p class="card-text"> {{post|length}} Publication Au Total</p>
+        </div>
+ 
+           </div></br>
+
+            <!-- fin boite de navigation-->
+
+            <!--- calendar-->
+                                     
+                   {%include './calendar.html'%}
+
+
+
+            <!---fin calendar-->
+                                      
+            </div>
+
+
+
+<!-- fin row-->
+        </div>
+      
+      <!--- pagination-->
+
+     <div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1" class="btn btn-primary">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}" class="btn btn-dark">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}" class="btn btn-secondary">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}" class="btn btn-success">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+
+<!-- fin pagination-->
+
+
+<!--- fin contante-->
+        
+
+        <!-- Footer-->
+
+{%endblock content%}
+

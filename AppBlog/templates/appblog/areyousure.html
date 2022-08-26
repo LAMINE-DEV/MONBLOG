@@ -1,0 +1,24 @@
+{% extends './base.html'%}
+
+{% load static %}
+{%block content%}
+
+<form method="post">{% csrf_token %}
+    <p><strong>Are you sure you want to delete ""?</strong></p>
+
+
+  <div class="card">
+  <div class="card-header">
+    Post ID : {{object.pk}} 
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">Date : {{object.datetime}} </h5>
+    <p class="card-text">{{ object.body.html|safe }}</p>
+    <a href="{% url 'detail-view' object.pk%}" class="btn btn-dark">Go Back</a>
+  </div>
+</div>
+</br>
+    <input type="submit" class="btn btn-danger" value="Confirm">
+</form>
+</br>
+{%endblock%}

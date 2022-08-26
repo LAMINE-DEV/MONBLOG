@@ -1,0 +1,163 @@
+{% extends './base.html'%}
+
+{% load static %}
+{%load crispy_forms_tags%}
+{%block content%}
+
+
+
+ <link rel="stylesheet" type="text/css" href="{% static 'css/userinformation.css'%}"/>
+
+ <style type="text/css">
+
+    #hint_id_new_password1,#hint_id_new_password2{
+        display: none;
+    }
+    #bt{
+        border: 5px;
+        border-radius: 100px;
+        background-color: blue;
+        
+    }
+</style>
+
+
+<div class="container-xl px-4 mt-4">
+    <!-- Account page navigation-->
+
+  
+    <hr class="mt-0 mb-4">
+    <div class="row">
+        <div class="col-xl-4">
+            <!-- Profile picture card-->
+            <div class="card mb-4 mb-xl-0">
+                <div class="card-header">Profile</div>
+                <div class="card-body text-center">
+                    <!-- Profile picture image-->
+                    <img class="img-account-profile rounded-circle mb-2" src="{{data.photo.url}}" alt="">
+                    <!-- Profile picture help block-->
+                    <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
+                    <!-- Profile picture upload button-->
+                    <form method="post" action="{% url 'upload-view'%}" enctype="multipart/form-data">
+                        {%csrf_token%}
+                        <input type="file" name="photo" id="videoUploadFile" required class="form-control"/>
+                    </br>
+                    <button class="btn btn-warning" type="submit" id="btn">Upload new image</button>
+                   </form>
+               </br>
+              {%if messages%}
+                {%for message in messages%}
+
+                  <div class="alert alert-primary alert-dismissible fade show" role="alert">
+                  <strong>Alert du Serveur!!!!</strong> {{message}}
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+
+
+                {%endfor%}
+                {%endif%}
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-8">
+            <!-- Account details card-->
+            <div class="card mb-4">
+                <div class="card-header">Account Details</div>
+                <div class="card-body">
+                    <form method="post" action="{% url 'update-view' %}">
+                        <!-- Form Group (username)-->
+                        <div class="mb-3">
+                            <label class="small mb-1" for="inputUsername">Username (how your name will appear to other users on the site)</label>
+                            <input class="form-control" id="inputUsername" name="username" type="text" placeholder="Enter your username" value="{{information.username}}" >
+                        </div>
+                        <!-- Form Row-->
+                        <div class="row gx-3 mb-3">
+                            <!-- Form Group (first name)-->{%csrf_token%}
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="inputFirstName">First name</label>
+                                <input class="form-control" id="inputFirstName" type="text" placeholder="Enter your first name"  name='first_name'  value="{{information.first_name}}">
+                            </div>
+                            <!-- Form Group (last name)-->
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="inputLastName">Last name</label>
+                                <input class="form-control" name="last_name" id="inputLastName" type="text" placeholder="Enter your last name" value="{{information.last_name}}">
+                            </div>
+                        </div>
+                        <!-- Form Row        -->
+                        <div class="row gx-3 mb-3">
+                            <!-- Form Group (organization name)-->
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="inputOrgName">Email</label>
+                                <input class="form-control" id="inputOrgName" type="text" placeholder="Email"  name="email" value="{{information.email}}" >
+                            </div>
+                            <!-- Form Group (location)-->
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="inputLocation">Profession</label>
+                                <input class="form-control" id="inputLocation" type="text" placeholder="Your Job" value="{{data.profession}}" disabled />
+                            </div>
+                        </div>
+                        <!-- Form Group (email address)-->
+                        <div class="mb-3">
+                            <label class="small mb-1" for="inputEmailAddress">Telephone</label>
+                            <input class="form-control" name="telephone" id="inputEmailAddress" type="tel" placeholder="Telephone "  value="{{data.telephone}}">
+                        </div>
+                         <div class="mb-3">
+                            <label class="small mb-1" for="inputEmailAddress">Date De Creation Du Compt</label>
+                            <input class="form-control" name="telephone" id="inputEmailAddress" type="text" placeholder="date de creation du compt"  value="{{data.datetime}}" disabled>
+                        </div>
+                        <!-- Form Row-->
+                                            <!-- Save changes button-->
+                        <button class="btn btn-primary" type="submit">Save changes</button>
+                    </form>
+                </hr>
+
+                <!-- update user password-->
+            </br>
+
+                    <div class="card">
+                          <div class="card-header">
+                            Update Password
+                          </div>
+                          <div class="card-body">
+                          
+                            <p class="card-text">
+                                 <form method="post" action="{% url 'passwordupdate-view' %}">
+                                  
+                                  {{ form|crispy}}
+                                  {% csrf_token %}
+                                  <button type="submit" class="btn btn-danger">Update Password</button>
+                                </form>
+                                        
+                            </p>
+                          </div>
+                      </div>
+
+
+                    
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+ <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.css">
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+ <script type="text/javascript">
+       
+       $(document).ready(function(){
+
+        $('#btn').click(function(){
+            if(document.getElementById("videoUploadFile").files.length == 0 ){
+
+                swal('Message Du Serveur','Message: le champ photo est vide veuillez selectionner un image svp !!','error');
+            }
+
+        });
+
+       });
+
+   </script>
+
+
+
+{%endblock%}

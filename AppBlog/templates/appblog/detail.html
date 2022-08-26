@@ -1,0 +1,274 @@
+{% extends './base.html'%}
+{%load crispy_forms_tags%}
+{%load static%}
+
+
+{%block content%}
+        <!-- Main Content-->
+
+
+        <style type="text/css">
+          
+          input[name='name'],input[name='email']{
+
+              display: none;
+
+
+          }
+
+          label[for='id_email'],label[for='id_name']{
+
+
+            display: none;
+          }
+
+        </style>
+  
+            <div class="row">
+                  <div class="col-md-8">
+                      {%if post%}
+                    
+              
+
+                        <div class="card mb-3">
+                          
+                                
+                                      <div class="card-body">
+                                        <h5 class="card-title"><img src="https://media.istockphoto.com/vectors/caucasian-bridegroom-wearing-a-black-suit-in-cartoon-style-vector-vector-id1141905006?k=6&m=1141905006&s=170667a&w=0&h=MeiLI744Ge128M1YFJpq3zBxb4WycxbQ-SSFSx6STP4=" width=30px height=30px/> Categorie : {{post.categorie}}</h5>
+                                        <p class="card-text">
+                                          <p  class="font-monospace">
+                                              {%if post.image %}
+                                            
+                                                <img src="{{post.image.url}}" style="width: max-content/3; height: max-content/3; border:10px;border-radius: 20px;" class="card-img-top" alt="Wild Landscape"/>
+
+                                                {%endif%}</br></br>
+
+                                             {% if post.document_video%}
+                                             <h4 style="font-family:monospace;">Tutoriel en {{post.categorie}}</h4></br></br>
+
+                                            <video width="450" height="340" controls><source src="{{post.document_video.url}}" type="video/mp4">
+
+                                             Votre navigateur ne permet pas de lire les vidéos HTML5.
+                                           </video>
+                                           {%else%}
+                                          {%endif%}</br> </br> 
+
+                                          {{post.body.html|safe}}</br> {%if post.document_pdf%}
+                                          <span style="font-family:monospace;  color: red; font-size: 20px;"ss>Telecharger: &nbsp;</span>  
+                                          <a href="{{post.document_pdf.url}}" style="color:blue" download="Acme Documentation (ver. 2.0.1).txt">{{post.document_pdf}}</a>{%endif%}</br></</br>
+
+                                          {%if delete_post%}
+
+                                             <form action="{% url 'deletepage-view' post.id%}" method="post">
+                                              {% csrf_token %}
+                                                <button class="btn btn-danger" type="submit">Delete Post</button>
+
+                                             </form></br>
+
+                                            
+                                          {%else%}
+                                          {%endif%}
+                                         
+
+                                          </p>
+                                        
+                                        </p>
+                                        <p class="card-text">
+                                          <strong>publier le :  </strong>{{post.datetime}}
+                                        </p>
+                                      </div>
+                                    </div>
+                         
+                             {%endif%}
+
+
+                                          <!-- all commentaire-->
+
+                              </hr>
+                              <h3 style="font-family:monospace;" class="bg-primary">commentaires :</h3></br>
+
+                                   {% for comment in comments %}
+                                          <div class="bg-light bg-gradient" style="padding: 10px;">
+                                            <p class="font-weight-bold">
+                                              <img src="{{comment.photo.url}}"  width="60px" height="60px" style="border:5px; border-radius: 10px;" /> {{ comment.name }}
+                                              <span class=" text-muted font-weight-normal">
+                                                {{ comment.created_on }}
+                                              </span> </p>
+                                         
+                                              <a href="mailto:{{comment.email}}">email : {{comment.email}}</a>
+                                           
+                                            {{ comment.content.html|safe| linebreaks }}
+                                          </div>
+                                        </hr>
+                                          {% endfor %}
+
+
+                        <!-- end commentaire-->
+
+                           <!-- comment  form block-->
+
+                
+                            <div class="card-body">
+                              {%if messages%}
+                            {%for messages in messages%}
+                              <div class="alert alert-success" role="alert">
+                                {{messages}}
+                                
+                              </div>
+                              {%endfor%}
+                              {%endif%}
+
+                              <h3 style="font-family: monospace; float:right;" class="bg-success">Commentez-ici</h3>
+                              <form method="post" style="margin-top: 1.3em;">
+                                {% csrf_token %}
+                                {{comment_form.media}}
+                                {{comment_form|crispy}}
+
+                                <button type="submit" class="btn btn-primary  btn-lg"  id="comentaire">Submit</button>
+                              </form>
+                              
+                            </div>
+
+
+                           <!--end block comment fomr-->
+
+
+                    
+                    </div>
+
+                  <div class="col-md-4">
+
+
+
+                                        <!--- boite de navigation-->
+                            <div class="list-group">
+                            <button type="button" class="list-group-item list-group-item-action active" aria-current="true">
+                              Tableau Bord
+                            </button>
+                              <ol class="list-group list-group-numbered">
+                                <li class="list-group-item d-flex justify-content-between align-items-start">
+                                  <div class="ms-2 me-auto">
+                                    <div class="fw-bold"><a href="{%url 'category' 'python' %}" >Programmation en PYTHON 3</a></div>
+                                    version 3
+                                  </div>
+                                  <span class="badge bg-primary rounded-pill">{{categorie1|length}}</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-start">
+                                  <div class="ms-2 me-auto">
+                                    <div class="fw-bold"><a href="{%url 'category' 'java' %}">Programmation en JAVA</a></div>
+                                    tous les versions
+                                  </div>
+                                  <span class="badge bg-primary rounded-pill">{{categorie2|length}}</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-start">
+                                  <div class="ms-2 me-auto">
+                                    <div class="fw-bold"><a href="{%url 'category' 'django' %}">Programmation en DJANGO</a></div>
+                                    version 3 , 4.0 et 4.1
+                                  </div>
+                                  <span class="badge bg-primary rounded-pill">{{categorie3|length}}</span>
+
+                                </li>
+                                  <li class="list-group-item d-flex justify-content-between align-items-start">
+                                  <div class="ms-2 me-auto">
+                                    <div class="fw-bold"><a href="{%url 'category' 'javascript' %}">Programmation en JAVASCRIP ET JQUERY</a></div>
+                                    tous les versions
+                                  </div>
+                                  <span class="badge bg-primary rounded-pill">{{categorie4|length}}</span>
+                                </li>
+
+                                <li class="list-group-item d-flex justify-content-between align-items-start">
+                                  <div class="ms-2 me-auto">
+                                    <div class="fw-bold"><a href="{%url 'category' 'css3' %}">Programmation en CSS3 ET BOOTSTRAP</a></div>
+                                    tous les versions
+                                  </div>
+                                  <span class="badge bg-primary rounded-pill">{{categorie5|length}}</span>
+                                </li>
+
+                                <li class="list-group-item d-flex justify-content-between align-items-start">
+                                  <div class="ms-2 me-auto">
+                                    <div class="fw-bold"><a href="{%url 'category' 'c' %}">Programmation en C </a></div>
+                                    tous les versions
+                                  </div>
+                                  <span class="badge bg-primary rounded-pill">{{categorie6|length}}</span>
+                                </li>
+
+                                <li class="list-group-item d-flex justify-content-between align-items-start">
+                                  <div class="ms-2 me-auto">
+                                    <div class="fw-bold"><a href="{%url 'category' 'html' %}">Programmation en HTML5</a> </div>
+                                    version 5
+                                  </div>
+                                  <span class="badge bg-primary rounded-pill">{{categorie7|length}}</span>
+                                </li>
+
+                                <li class="list-group-item d-flex justify-content-between align-items-start">
+                                      <div class="ms-2 me-auto">
+                                        <div class="fw-bold"><a href="{%url 'category' 'annonces' %}">Annonces</a> </div>
+                                        
+                                      </div>
+                                      <span class="badge bg-primary rounded-pill">{{categorie8|length}}</span>
+                                    </li>
+                                       
+                                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                                      <div class="ms-2 me-auto">
+                                        <div class="fw-bold"><a href="{%url 'category' 'autres' %}">Autres</a> </div>
+                                      
+                                      </div>
+                                      <span class="badge bg-primary rounded-pill">{{categorie9|length}}</span>
+                                    </li>
+
+
+                              </ol>
+                            </div>
+
+                                  </br></br>
+
+                              <div class="card text-white bg-primary mb-6" style="max-width: 35rem;">
+                              <div class="card-header">Total De Publication</div>
+                              <div class="card-body">
+                                <h5 class="card-title"></h5>
+                                <p class="card-text"> {{postdata|length}} Publication Au Total</p>
+                              </div>
+
+
+                          </div>
+
+            <!-- fin boite de navigation-->
+                         {%include './calendar.html'%}
+
+                      
+                  </div>
+
+
+            </div>
+            <script type="text/javascript">
+              
+
+
+            $(document).ready(function () {
+             
+               $("#comentaire").click(function(){
+
+                           //var $email=$("input[name='email']").val()
+                           //var $name=$("input[name='name']").val()
+                           var $content=$("input[name='content']").val()
+                         
+                           if ($content.length===0) {
+
+                             swal("Message Du Serveur!!!", " Message : Tous Les Champs Sont Aubligatoires !!!");
+                           }
+
+
+
+                            
+               });
+});
+
+            </script>
+
+           
+    
+
+        <!-- Footer-->
+
+        {%endblock content%}
+
